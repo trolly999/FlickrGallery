@@ -1,14 +1,13 @@
 package uk.co.morrisonspls.sysdevns.flickrgallery.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import java.util.List;
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,6 +17,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import uk.co.morrisonspls.sysdevns.flickrgallery.R;
+import uk.co.morrisonspls.sysdevns.flickrgallery.adapter.ScrollViewAdapter;
 import uk.co.morrisonspls.sysdevns.flickrgallery.model.FlickrApi;
 import uk.co.morrisonspls.sysdevns.flickrgallery.model.JsonFlickrFeed;
 import uk.co.morrisonspls.sysdevns.flickrgallery.model.JsonFlickrPhoto;
@@ -31,9 +31,12 @@ public class MainActivity extends AppCompatActivity {
 
     private String TAG = MainActivity.class.getSimpleName();
     private final String url = "https://api.flickr.com/services/feeds/";
+    private ArrayList<JsonFlickrPhoto> jsonFlickrPhotos;
 
     // Butterknife associations
     @BindView(R.id.textView1) TextView textView1;
+    @BindView(R.id.imageView) ImageView imageView;
+    @BindView(R.id.gridView)  GridView gridView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,25 +44,26 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        //getRetrofitArray();
-        getRetrofitObject();
+        getDataFromFlickr();
     }
 
 
-    private void getRetrofitObject() {
-        Gson gson = new GsonBuilder().setLenient().create();
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(url).addConverterFactory(GsonConverterFactory.create(gson)).build();
+    private void getDataFromFlickr() {
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(url).addConverterFactory(GsonConverterFactory.create()).build();
         FlickrApi service = retrofit.create(FlickrApi.class);
         Call<JsonFlickrFeed> call = service.getPhotoFeed();
         call.enqueue(new Callback<JsonFlickrFeed>() {
             @Override
             public void onResponse(Call<JsonFlickrFeed> call, Response<JsonFlickrFeed> response) {
                 Toast.makeText(MainActivity.this,"success",Toast.LENGTH_LONG).show();
-                if (response.isSuccessful())
-                    textView1.setText(response.body().getModified());
+                if (response.isSuccessful()) {
+                    jsonFlickrPhotos = response.body().getItems();
+                    gridView.setAdapter(new ScrollViewAdapter(MainActivity.this, jsonFlickrPhotos));
+                    //textView1.setText(jsonFlickrPhotos.get(0).getLink());
+                    //Glide.with(MainActivity.this).load(jsonFlickrPhotos.get(0).getMedia().getM()).centerCrop().into(imageView);
+                }
                 else
                     textView1.setText("response is failure");
-
             }
 
             @Override
@@ -69,29 +73,4 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-
-    private void getRetrofitArray() {
-
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(url).addConverterFactory(GsonConverterFactory.create()).build();
-        FlickrApi service = retrofit.create(FlickrApi.class);
-        Call<List<JsonFlickrPhoto>> call = service.getPhotos();
-
-        call.enqueue(new Callback<List<JsonFlickrPhoto>>() {
-            @Override
-            public void onResponse(Call<List<JsonFlickrPhoto>> call, Response<List<JsonFlickrPhoto>> response) {
-
-                List<JsonFlickrPhoto> flickrPhotos = response.body();
-                Toast.makeText(MainActivity.this,"success",Toast.LENGTH_LONG).show();
-                textView1.setText(flickrPhotos.size());
-            }
-
-            @Override
-            public void onFailure(Call<List<JsonFlickrPhoto>> call, Throwable t) {
-                Toast.makeText(MainActivity.this,"failed",Toast.LENGTH_LONG).show();
-            }
-        });
-
-    }
-
 }

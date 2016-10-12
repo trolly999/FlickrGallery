@@ -6,4 +6,8 @@ package uk.co.morrisonspls.sysdevns.flickrgallery.model;
 
 public class Media {
     String m;
+
+    public String getM() {
+        return m;
+    }
 }
