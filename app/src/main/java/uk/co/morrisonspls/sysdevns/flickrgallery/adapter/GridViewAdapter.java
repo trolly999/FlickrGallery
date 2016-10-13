@@ -20,9 +20,9 @@ import uk.co.morrisonspls.sysdevns.flickrgallery.model.JsonFlickrPhoto;
  * Created by sysdevns on 12/10/2016.
  */
 
-public class ScrollViewAdapter extends ArrayAdapter<JsonFlickrPhoto> {
+public class GridViewAdapter extends ArrayAdapter<JsonFlickrPhoto> {
 
-    public ScrollViewAdapter(Context context, ArrayList<JsonFlickrPhoto> jsonFlickrPhotos) {
+    public GridViewAdapter(Context context, ArrayList<JsonFlickrPhoto> jsonFlickrPhotos) {
         super(context,0,jsonFlickrPhotos);
     }
 
@@ -43,9 +43,12 @@ public class ScrollViewAdapter extends ArrayAdapter<JsonFlickrPhoto> {
              //imageView = (ImageView) convertView.findViewById(R.id.gridviewImage);
             imageView = new ImageView(this.getContext());
             //imageView.setLayoutParams(new GridView.LayoutParams(85d,85d));
+            //imageView.setAdjustViewBounds(true);
+            //imageView.setMinimumHeight(100);
             imageView.setAdjustViewBounds(true);
-            imageView.setMinimumHeight(100);
-            imageView.setPadding(8,8,8,8);
+            //imageView.setPadding(3,3,3,3);
+
+            imageView.setLayoutParams(new ViewGroup.LayoutParams(parent.getWidth()/3,parent.getWidth()/3));
             //convertView.setTag(new ViewHolder(imageView));
         } else {
             //ViewHolder viewHolder = (ViewHolder) convertView.getTag();
