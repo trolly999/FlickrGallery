@@ -1,7 +1,6 @@
 package uk.co.morrisonspls.sysdevns.flickrgallery.model;
 
-import org.json.JSONArray;
-
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,8 +14,7 @@ public class JsonFlickrFeed {
     private String description;
     private String modified;
     private String generator;
-    //private JSONArray items;
-    private List<JsonFlickrPhoto> items;
+    private ArrayList<JsonFlickrPhoto> items;
 
     public String getTitle() {
         return title;
@@ -38,7 +36,7 @@ public class JsonFlickrFeed {
         return generator;
     }
 
-    public List<JsonFlickrPhoto> getItems() {
+    public ArrayList<JsonFlickrPhoto> getItems() {
         return items;
     }
 }

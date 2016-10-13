@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <ImageView
+        android:layout_width="287dp"
+        android:layout_height="0dp"
+        app:srcCompat="@mipmap/ic_launcher"
+        android:id="@+id/ivDetailImage"
+        app:layout_constraintLeft_toLeftOf="@+id/constraintLayout"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toTopOf="@+id/constraintLayout"
+        app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:text="@string/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView6"
+        android:layout_marginStart="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/ivDetailImage"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvTitle" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="209dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvTitle"
+        tools:layout_editor_absoluteY="8dp"
+        android:layout_marginStart="48dp"
+        app:layout_constraintLeft_toRightOf="@+id/textView6"
+        android:layout_marginLeft="48dp" />
+
+    <TextView
+        android:text="@string/date_taken"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView8"
+        android:layout_marginStart="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/ivDetailImage"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvTimestamp" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvTimestamp"
+        app:layout_constraintLeft_toLeftOf="@+id/tvTitle"
+        app:layout_constraintRight_toRightOf="@+id/tvTitle"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+
+    <TextView
+        android:text="@string/description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView10"
+        android:layout_marginStart="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/ivDetailImage"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvDescription" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvDescription"
+        app:layout_constraintLeft_toLeftOf="@+id/tvTimestamp"
+        app:layout_constraintRight_toRightOf="@+id/tvTimestamp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/tvTimestamp" />
+
+    <TextView
+        android:text="@string/author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView12"
+        android:layout_marginStart="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/ivDetailImage"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvAuthor" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvAuthor"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/tvDescription"
+        app:layout_constraintLeft_toLeftOf="@+id/tvDescription"
+        app:layout_constraintRight_toRightOf="@+id/tvDescription" />
+
+    <TextView
+        android:text="@string/tags"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView14"
+        android:layout_marginStart="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/ivDetailImage"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvTags" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvTags"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/tvAuthor"
+        app:layout_constraintLeft_toLeftOf="@+id/tvAuthor"
+        app:layout_constraintRight_toRightOf="@+id/tvAuthor" />
+</android.support.constraint.ConstraintLayout>

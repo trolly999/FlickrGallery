@@ -1,14 +1,15 @@
 package uk.co.morrisonspls.sysdevns.flickrgallery.activity;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import java.util.List;
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,6 +19,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import uk.co.morrisonspls.sysdevns.flickrgallery.R;
+import uk.co.morrisonspls.sysdevns.flickrgallery.adapter.GridViewAdapter;
+import uk.co.morrisonspls.sysdevns.flickrgallery.app.FlickrGalleryApplication;
 import uk.co.morrisonspls.sysdevns.flickrgallery.model.FlickrApi;
 import uk.co.morrisonspls.sysdevns.flickrgallery.model.JsonFlickrFeed;
 import uk.co.morrisonspls.sysdevns.flickrgallery.model.JsonFlickrPhoto;
@@ -31,67 +34,64 @@ public class MainActivity extends AppCompatActivity {
 
     private String TAG = MainActivity.class.getSimpleName();
     private final String url = "https://api.flickr.com/services/feeds/";
+    private ArrayList<JsonFlickrPhoto> jsonFlickrPhotos;
+    FlickrGalleryApplication global;
 
     // Butterknife associations
-    @BindView(R.id.textView1) TextView textView1;
+    @BindView(R.id.tvError) TextView tvError;
+    @BindView(R.id.gridView)  GridView gridView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        global = (FlickrGalleryApplication) getApplicationContext();
 
-        //getRetrofitArray();
-        getRetrofitObject();
+
+            // Listen for click events
+            gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    launchDetailActivity(position);
+                }
+            });
+        if (global.getJsonFlickrPhotos() == null) {
+            getDataFromFlickr();
+        } else {
+            jsonFlickrPhotos = global.getJsonFlickrPhotos();
+            gridView.setAdapter(new GridViewAdapter(MainActivity.this, jsonFlickrPhotos));
+        }
+    }
+
+    private void launchDetailActivity(int position) {
+        Intent intent = new Intent(this, DetailActivity.class);
+        intent.putExtra("flickrPhotoPosition", position);
+        startActivity(intent);
     }
 
 
-    private void getRetrofitObject() {
-        Gson gson = new GsonBuilder().setLenient().create();
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(url).addConverterFactory(GsonConverterFactory.create(gson)).build();
+    private void getDataFromFlickr() {
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(url).addConverterFactory(GsonConverterFactory.create()).build();
         FlickrApi service = retrofit.create(FlickrApi.class);
         Call<JsonFlickrFeed> call = service.getPhotoFeed();
         call.enqueue(new Callback<JsonFlickrFeed>() {
             @Override
             public void onResponse(Call<JsonFlickrFeed> call, Response<JsonFlickrFeed> response) {
-                Toast.makeText(MainActivity.this,"success",Toast.LENGTH_LONG).show();
-                if (response.isSuccessful())
-                    textView1.setText(response.body().getModified());
+                Toast.makeText(MainActivity.this, R.string.success,Toast.LENGTH_LONG).show();
+                if (response.isSuccessful()) {
+                    jsonFlickrPhotos = response.body().getItems();
+                    global.setJsonFlickrPhotos(jsonFlickrPhotos);
+                    gridView.setAdapter(new GridViewAdapter(MainActivity.this, jsonFlickrPhotos));                }
                 else
-                    textView1.setText("response is failure");
-
+                    tvError.setText(R.string.onBadResponse);
             }
 
             @Override
             public void onFailure(Call<JsonFlickrFeed> call, Throwable t) {
-                Toast.makeText(MainActivity.this,"failure",Toast.LENGTH_LONG).show();
-                textView1.setText("onFailure");
+                gridView.setVisibility(View.GONE);
+                tvError.setText(R.string.onFailure);
             }
         });
     }
-
-
-    private void getRetrofitArray() {
-
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(url).addConverterFactory(GsonConverterFactory.create()).build();
-        FlickrApi service = retrofit.create(FlickrApi.class);
-        Call<List<JsonFlickrPhoto>> call = service.getPhotos();
-
-        call.enqueue(new Callback<List<JsonFlickrPhoto>>() {
-            @Override
-            public void onResponse(Call<List<JsonFlickrPhoto>> call, Response<List<JsonFlickrPhoto>> response) {
-
-                List<JsonFlickrPhoto> flickrPhotos = response.body();
-                Toast.makeText(MainActivity.this,"success",Toast.LENGTH_LONG).show();
-                textView1.setText(flickrPhotos.size());
-            }
-
-            @Override
-            public void onFailure(Call<List<JsonFlickrPhoto>> call, Throwable t) {
-                Toast.makeText(MainActivity.this,"failed",Toast.LENGTH_LONG).show();
-            }
-        });
-
-    }
-
 }
