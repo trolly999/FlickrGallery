@@ -11,10 +11,6 @@ import retrofit2.http.GET;
 
 public interface FlickrApi {
 
-    @GET("photos_public.gne?format=json")
-    Call<List<JsonFlickrPhoto>> getPhotos();
-
-
     @GET("photos_public.gne?format=json&nojsoncallback=1")
     Call<JsonFlickrFeed> getPhotoFeed();
 

@@ -26,33 +26,16 @@ public class GridViewAdapter extends ArrayAdapter<JsonFlickrPhoto> {
         super(context,0,jsonFlickrPhotos);
     }
 
-    private static class ViewHolder {
-        public final ImageView imageView;
-        public ViewHolder(ImageView imageView) {
-            this.imageView = imageView;
-        }
-    }
-
     @NonNull
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
         ImageView imageView;
         if (convertView == null) {
-            //imageView = LayoutInflater.from(getContext()).inflate(R.layout.gridview_item, parent, false);
-             //imageView = (ImageView) convertView.findViewById(R.id.gridviewImage);
             imageView = new ImageView(this.getContext());
-            //imageView.setLayoutParams(new GridView.LayoutParams(85d,85d));
-            //imageView.setAdjustViewBounds(true);
-            //imageView.setMinimumHeight(100);
             imageView.setAdjustViewBounds(true);
-            //imageView.setPadding(3,3,3,3);
-
             imageView.setLayoutParams(new ViewGroup.LayoutParams(parent.getWidth()/3,parent.getWidth()/3));
-            //convertView.setTag(new ViewHolder(imageView));
         } else {
-            //ViewHolder viewHolder = (ViewHolder) convertView.getTag();
-            //imageView = viewHolder.imageView;
             imageView = (ImageView) convertView;
         }
 

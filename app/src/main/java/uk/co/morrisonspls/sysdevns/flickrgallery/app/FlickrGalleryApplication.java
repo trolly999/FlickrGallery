@@ -12,6 +12,7 @@ import uk.co.morrisonspls.sysdevns.flickrgallery.model.JsonFlickrPhoto;
 
 public class FlickrGalleryApplication extends Application {
 
+    // global variables used throughout app
     private ArrayList<JsonFlickrPhoto> jsonFlickrPhotos;
 
     public ArrayList<JsonFlickrPhoto> getJsonFlickrPhotos() {

@@ -16,26 +16,6 @@ public class JsonFlickrFeed {
     private String generator;
     private ArrayList<JsonFlickrPhoto> items;
 
-    public String getTitle() {
-        return title;
-    }
-
-    public String getLink() {
-        return link;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getModified() {
-        return modified;
-    }
-
-    public String getGenerator() {
-        return generator;
-    }
-
     public ArrayList<JsonFlickrPhoto> getItems() {
         return items;
     }

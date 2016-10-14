@@ -48,29 +48,31 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         global = (FlickrGalleryApplication) getApplicationContext();
 
+        // Listen for click events on the gridview
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                launchDetailActivity(position);
+            }
+        });
 
-            // Listen for click events
-            gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    launchDetailActivity(position);
-                }
-            });
+        // if null then this must be first time into the App
         if (global.getJsonFlickrPhotos() == null) {
             getDataFromFlickr();
-        } else {
+        } else { // The app has been recreated - so reuse existing data
             jsonFlickrPhotos = global.getJsonFlickrPhotos();
             gridView.setAdapter(new GridViewAdapter(MainActivity.this, jsonFlickrPhotos));
         }
     }
 
+    // Invoked when photo clicked, launches photo detail activity
     private void launchDetailActivity(int position) {
         Intent intent = new Intent(this, DetailActivity.class);
         intent.putExtra("flickrPhotoPosition", position);
         startActivity(intent);
     }
 
-
+    // Pulls JSON data from Flickr feed, and populates arraylist
     private void getDataFromFlickr() {
         Retrofit retrofit = new Retrofit.Builder().baseUrl(url).addConverterFactory(GsonConverterFactory.create()).build();
         FlickrApi service = retrofit.create(FlickrApi.class);
