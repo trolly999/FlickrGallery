@@ -11,7 +11,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.MainActivity">
+        <activity android:name=".modules.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,13 +19,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.DetailActivity"
+            android:name=".modules.detail.DetailActivity"
             android:label="@string/title_activity_detail"
-            android:parentActivityName=".activity.MainActivity"
+            android:parentActivityName=".modules.main.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="uk.co.morrisonspls.sysdevns.flickrgallery.activity.MainActivity" />
+                android:value="uk.co.morrisonspls.sysdevns.flickrgallery.modules.main.MainActivity" />
         </activity>
     </application>
 
