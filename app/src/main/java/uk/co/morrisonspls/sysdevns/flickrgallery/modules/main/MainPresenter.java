@@ -1,23 +1,18 @@
 package uk.co.morrisonspls.sysdevns.flickrgallery.modules.main;
 
-import android.content.Context;
-import android.content.Intent;
-
 import com.hannesdorfmann.mosby.mvp.MvpBasePresenter;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.greenrobot.eventbus.EventBus;
 
-import uk.co.morrisonspls.sysdevns.flickrgallery.app.FlickrGalleryApplication;
+import java.util.ArrayList;
+
 import uk.co.morrisonspls.sysdevns.flickrgallery.model.FlickrPhotoLoader;
 import uk.co.morrisonspls.sysdevns.flickrgallery.model.JsonFlickrPhoto;
-import uk.co.morrisonspls.sysdevns.flickrgallery.modules.detail.DetailActivity;
 
 
 public class MainPresenter extends MvpBasePresenter<MainView> implements MainPresenterView {
 
     ArrayList<JsonFlickrPhoto> jsonFlickrPhotos;
-//    FlickrGalleryApplication global = (FlickrGalleryApplication) getApplicationContext();
 
     @Override
     public void getMorePhotos() {
@@ -27,13 +22,9 @@ public class MainPresenter extends MvpBasePresenter<MainView> implements MainPre
 
     @Override
     public void photoClicked(int position) {
-        if (isViewAttached()) {
-            Context context = getView().getContext();
-            FlickrGalleryApplication global = (FlickrGalleryApplication) context.getApplicationContext();
-            global.setJsonFlickrPhotos(jsonFlickrPhotos);
-            Intent intent = new Intent(context, DetailActivity.class);
-            intent.putExtra("flickrPhotoPosition", position);
-            context.startActivity(intent);
+        if (isViewAttached() && jsonFlickrPhotos != null) {
+            EventBus.getDefault().postSticky(jsonFlickrPhotos);
+            getView().launchDetail(position);
         }
     }
 
@@ -48,7 +39,6 @@ public class MainPresenter extends MvpBasePresenter<MainView> implements MainPre
                         getView().setData(jsonFlickrPhotos);
                         //getView().showContent();
                     }
-
                 }
 
                 @Override

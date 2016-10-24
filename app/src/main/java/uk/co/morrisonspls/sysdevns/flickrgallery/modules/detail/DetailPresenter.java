@@ -1,10 +1,11 @@
 package uk.co.morrisonspls.sysdevns.flickrgallery.modules.detail;
 
-import android.content.Context;
-
 import com.hannesdorfmann.mosby.mvp.MvpBasePresenter;
 
-import uk.co.morrisonspls.sysdevns.flickrgallery.app.FlickrGalleryApplication;
+import org.greenrobot.eventbus.EventBus;
+
+import java.util.ArrayList;
+
 import uk.co.morrisonspls.sysdevns.flickrgallery.model.JsonFlickrPhoto;
 
 /**
@@ -13,20 +14,39 @@ import uk.co.morrisonspls.sysdevns.flickrgallery.model.JsonFlickrPhoto;
 public class DetailPresenter extends MvpBasePresenter<DetailView> implements DetailPresenterView {
 
 
-    private int position;
+    private int position = -1;
+    private ArrayList<JsonFlickrPhoto> jsonFlickrPhotos;
 
     @Override
     public void setPhoto(int position) {
-        this.position = position;
+        if (this.position < 0)
+            this.position = position;
     }
 
     @Override
     public void loadPhoto() {
-        Context context = getView().getContext();
-        FlickrGalleryApplication global = (FlickrGalleryApplication) context.getApplicationContext();
-        JsonFlickrPhoto jsonFlickrPhoto = global.getJsonFlickrPhotos().get(position);
-        if (isViewAttached()) {
-            getView().showPhoto(jsonFlickrPhoto);
+        if (jsonFlickrPhotos == null) {
+            jsonFlickrPhotos = EventBus.getDefault().removeStickyEvent(ArrayList.class);
+            EventBus.getDefault().removeStickyEvent(ArrayList.class);
         }
+        if (isViewAttached()) {
+            getView().showPhoto(jsonFlickrPhotos.get(position));
+        }
+    }
+
+    @Override
+    public void getNext() {
+        if (position < jsonFlickrPhotos.size() - 1) {
+            position++;
+        }
+        loadPhoto();
+    }
+
+    @Override
+    public void getPrev() {
+        if (position > 0) {
+            position--;
+        }
+        loadPhoto();
     }
 }

@@ -5,16 +5,16 @@ package uk.co.morrisonspls.sysdevns.flickrgallery.modules.main;
 // URL "https://api.flickr.com"
 
 
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.view.GestureDetectorCompat;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hannesdorfmann.mosby.mvp.MvpActivity;
 
@@ -25,14 +25,18 @@ import butterknife.ButterKnife;
 import uk.co.morrisonspls.sysdevns.flickrgallery.R;
 import uk.co.morrisonspls.sysdevns.flickrgallery.adapter.FlickrPhotosAdapter;
 import uk.co.morrisonspls.sysdevns.flickrgallery.model.JsonFlickrPhoto;
+import uk.co.morrisonspls.sysdevns.flickrgallery.modules.detail.DetailActivity;
 
-public class MainActivity extends MvpActivity<MainView, MainPresenter> implements MainView
-{
+public class MainActivity extends MvpActivity<MainView, MainPresenter> implements MainView, GestureDetector.OnGestureListener {
+
+    private final int SWIPE_DISTANCE = 200;
+    private GestureDetector gestureDetector;
+
     // Butterknife associations
-    @BindView(R.id.gridView) GridView gridView;
-    @BindView(R.id.errorView) TextView errorMsg;
-
-
+    @BindView(R.id.gridView)
+    GridView gridView;
+    @BindView(R.id.errorView)
+    TextView errorMsg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,9 +56,16 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
         });
 
 
+        gestureDetector = new GestureDetector(this, this);
+
+        gridView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                gestureDetector.onTouchEvent(event);
+                return false;
+            }
+        });
     }
-
-
 
     @NonNull
     @Override
@@ -70,21 +81,54 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
     @Override
     public void showError(String errorMsg) {
         this.errorMsg.setText(errorMsg);
+        this.errorMsg.setVisibility(View.VISIBLE);
     }
 
     @Override
-    public Context getContext() {
-        return MainActivity.this;
-    }
-
-
-
-    /*
-    // Invoked when photo clicked, launches photo detail activity
-    private void launchDetailActivity(int position) {
+    public void launchDetail(int position) {
         Intent intent = new Intent(this, DetailActivity.class);
         intent.putExtra("flickrPhotoPosition", position);
         startActivity(intent);
     }
-*/
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        gestureDetector.onTouchEvent(event);
+        return super.onTouchEvent(event);
+    }
+
+    @Override
+    public boolean onDown(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public void onShowPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+        return false;
+    }
+
+    @Override
+    public void onLongPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        //Toast.makeText(this, "X1=" + e1.getX() + "    X2=" + e2.getX(), Toast.LENGTH_LONG).show();
+        if (e1.getX() - e2.getX() > SWIPE_DISTANCE)
+            presenter.getMorePhotos();
+        else
+            return false;
+        return true;
+    }
 }

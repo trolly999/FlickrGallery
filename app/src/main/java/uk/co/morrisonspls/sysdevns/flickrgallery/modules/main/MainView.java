@@ -20,7 +20,9 @@ public interface MainView extends MvpView {
     void showError(String errorMsg);
 
     // Returns the view context to the presenter - not sure if this is good practise
-    Context getContext();
+    void launchDetail(int position);
+
+
 
 
 }

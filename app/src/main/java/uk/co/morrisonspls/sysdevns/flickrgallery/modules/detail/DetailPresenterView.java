@@ -7,4 +7,6 @@ public interface DetailPresenterView {
 
     void setPhoto(int position);
     void loadPhoto();
+    void getNext();
+    void getPrev();
 }

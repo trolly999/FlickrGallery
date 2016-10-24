@@ -12,4 +12,5 @@ public interface MainPresenterView {
     void loadPhotos();
     void getMorePhotos();
 
+
 }

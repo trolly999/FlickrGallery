@@ -4,39 +4,38 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.GridView;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.hannesdorfmann.mosby.mvp.MvpActivity;
 
-import java.util.ArrayList;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import uk.co.morrisonspls.sysdevns.flickrgallery.R;
-import uk.co.morrisonspls.sysdevns.flickrgallery.app.FlickrGalleryApplication;
 import uk.co.morrisonspls.sysdevns.flickrgallery.model.JsonFlickrPhoto;
-import uk.co.morrisonspls.sysdevns.flickrgallery.modules.main.MainPresenter;
-import uk.co.morrisonspls.sysdevns.flickrgallery.modules.main.MainView;
 
-public class DetailActivity extends MvpActivity<DetailView, DetailPresenter> implements DetailView {
+public class DetailActivity extends MvpActivity<DetailView, DetailPresenter> implements DetailView, GestureDetector.OnGestureListener {
 
-    private JsonFlickrPhoto jsonFlickrPhoto;
+    private final int SWIPE_DISTANCE = 200;
+    private GestureDetector gestureDetector;
 
     // Butterknife associations
-    @BindView(R.id.tvTitle) TextView tvTitle;
-    @BindView(R.id.tvTimestamp) TextView tvTimestamp;
-    @BindView(R.id.tvDescription) TextView tvDescription;
-    @BindView(R.id.tvAuthor) TextView tvAuthor;
-    @BindView(R.id.tvTags) TextView tvTags;
-    @BindView(R.id.ivDetailImage) ImageView ivDetailImage;
+    @BindView(R.id.tvTitle)
+    TextView tvTitle;
+    @BindView(R.id.tvTimestamp)
+    TextView tvTimestamp;
+    @BindView(R.id.tvDescription)
+    TextView tvDescription;
+    @BindView(R.id.tvAuthor)
+    TextView tvAuthor;
+    @BindView(R.id.tvTags)
+    TextView tvTags;
+    @BindView(R.id.ivDetailImage)
+    ImageView ivDetailImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +43,21 @@ public class DetailActivity extends MvpActivity<DetailView, DetailPresenter> imp
         setContentView(R.layout.activity_detail);
         ButterKnife.bind(this);
 
+        gestureDetector = new GestureDetector(this, this);
+
         setRetainInstance(true);
 
         Intent intent = getIntent();
-        int position = intent.getIntExtra("flickrPhotoPosition",-1);
+        int position = intent.getIntExtra("flickrPhotoPosition", -1);
         presenter.setPhoto(position);
         presenter.loadPhoto();
+
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        gestureDetector.onTouchEvent(event);
+        return super.onTouchEvent(event);
     }
 
     @Override
@@ -69,7 +77,7 @@ public class DetailActivity extends MvpActivity<DetailView, DetailPresenter> imp
 
     @Override
     public Context getContext() {
-     return getApplicationContext();
+        return getApplicationContext();
     }
 
 
@@ -77,6 +85,43 @@ public class DetailActivity extends MvpActivity<DetailView, DetailPresenter> imp
     @Override
     public DetailPresenter createPresenter() {
         return new DetailPresenter();
+    }
+
+
+    @Override
+    public boolean onDown(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public void onShowPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+        return false;
+    }
+
+    @Override
+    public void onLongPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        if (e1.getX() - e2.getX() > SWIPE_DISTANCE)
+            presenter.getNext();
+        else if (e2.getX() - e1.getX() > SWIPE_DISTANCE)
+            presenter.getPrev();
+        else
+            return false;
+        return true;
     }
 
 }
