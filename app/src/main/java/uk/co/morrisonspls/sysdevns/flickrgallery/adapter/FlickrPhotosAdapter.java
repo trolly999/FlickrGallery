@@ -2,28 +2,25 @@ package uk.co.morrisonspls.sysdevns.flickrgallery.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
-import uk.co.morrisonspls.sysdevns.flickrgallery.R;
 import uk.co.morrisonspls.sysdevns.flickrgallery.model.JsonFlickrPhoto;
 
-/**
- * Created by sysdevns on 12/10/2016.
- */
+import static java.security.AccessController.getContext;
 
-public class GridViewAdapter extends ArrayAdapter<JsonFlickrPhoto> {
 
-    public GridViewAdapter(Context context, ArrayList<JsonFlickrPhoto> jsonFlickrPhotos) {
-        super(context,0,jsonFlickrPhotos);
+public class FlickrPhotosAdapter extends ArrayAdapter<JsonFlickrPhoto> {
+
+    public FlickrPhotosAdapter(Context context, ArrayList<JsonFlickrPhoto> jsonFlickrPhotos) {
+        super(context, 0, jsonFlickrPhotos);
     }
 
     @NonNull
@@ -34,7 +31,7 @@ public class GridViewAdapter extends ArrayAdapter<JsonFlickrPhoto> {
         if (convertView == null) {
             imageView = new ImageView(this.getContext());
             imageView.setAdjustViewBounds(true);
-            imageView.setLayoutParams(new ViewGroup.LayoutParams(parent.getWidth()/3,parent.getWidth()/3));
+            imageView.setLayoutParams(new ViewGroup.LayoutParams(parent.getWidth() / 3, parent.getWidth() / 3));
         } else {
             imageView = (ImageView) convertView;
         }
