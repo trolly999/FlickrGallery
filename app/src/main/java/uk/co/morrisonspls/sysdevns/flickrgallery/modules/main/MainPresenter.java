@@ -12,19 +12,17 @@ import uk.co.morrisonspls.sysdevns.flickrgallery.model.FlickrPhotoLoader;
 import uk.co.morrisonspls.sysdevns.flickrgallery.model.JsonFlickrPhoto;
 
 
-public class MainPresenter extends MvpBasePresenter<MainView> implements MainPresenterView {
+public class MainPresenter extends MvpBasePresenter<MainView> {
 
     private static final String TAG = "MainPresenter";
 
     ArrayList<JsonFlickrPhoto> jsonFlickrPhotos;
 
-    @Override
     public void getMorePhotos() {
         jsonFlickrPhotos = null;
         loadPhotos();
     }
 
-    @Override
     public void photoClicked(int position) {
         if (isViewAttached() && jsonFlickrPhotos != null) {
             EventBus.getDefault().postSticky(jsonFlickrPhotos);
@@ -32,7 +30,6 @@ public class MainPresenter extends MvpBasePresenter<MainView> implements MainPre
         }
     }
 
-    @Override
     public void loadPhotos() {
         if (jsonFlickrPhotos == null) {
             Log.d(TAG,"Calling API to get photos");
