@@ -1,7 +1,4 @@
-package uk.co.morrisonspls.sysdevns.flickrgallery.model;
-
-import android.os.Parcel;
-import android.os.Parcelable;
+package uk.co.morrisonspls.sysdevns.flickrgallery.pojo;
 
 /**
  * Created by sysdevns on 12/10/2016.

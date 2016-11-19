@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.hannesdorfmann.mosby.mvp.MvpView;
 
-import uk.co.morrisonspls.sysdevns.flickrgallery.model.JsonFlickrPhoto;
+import uk.co.morrisonspls.sysdevns.flickrgallery.pojo.JsonFlickrPhoto;
 
 /**
  * Created by sysdevns on 21/10/2016.

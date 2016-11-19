@@ -9,7 +9,6 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.hannesdorfmann.mosby.mvp.MvpActivity;
@@ -17,7 +16,7 @@ import com.hannesdorfmann.mosby.mvp.MvpActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import uk.co.morrisonspls.sysdevns.flickrgallery.R;
-import uk.co.morrisonspls.sysdevns.flickrgallery.model.JsonFlickrPhoto;
+import uk.co.morrisonspls.sysdevns.flickrgallery.pojo.JsonFlickrPhoto;
 
 public class DetailActivity extends MvpActivity<DetailView, DetailPresenter> implements DetailView, GestureDetector.OnGestureListener {
 

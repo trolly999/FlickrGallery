@@ -1,4 +1,4 @@
-package uk.co.morrisonspls.sysdevns.flickrgallery.model;
+package uk.co.morrisonspls.sysdevns.flickrgallery.pojo;
 
 public class Media {
 

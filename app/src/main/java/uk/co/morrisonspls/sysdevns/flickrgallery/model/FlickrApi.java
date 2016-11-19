@@ -1,9 +1,8 @@
 package uk.co.morrisonspls.sysdevns.flickrgallery.model;
 
-import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.http.GET;
+import uk.co.morrisonspls.sysdevns.flickrgallery.pojo.JsonFlickrFeed;
 
 /**
  * Created by sysdevns on 12/10/2016.

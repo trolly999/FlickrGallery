@@ -15,7 +15,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.hannesdorfmann.mosby.mvp.MvpActivity;
 
@@ -25,8 +24,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import uk.co.morrisonspls.sysdevns.flickrgallery.R;
 import uk.co.morrisonspls.sysdevns.flickrgallery.adapter.FlickrPhotosAdapter;
-import uk.co.morrisonspls.sysdevns.flickrgallery.model.JsonFlickrPhoto;
 import uk.co.morrisonspls.sysdevns.flickrgallery.modules.detail.DetailActivity;
+import uk.co.morrisonspls.sysdevns.flickrgallery.pojo.JsonFlickrPhoto;
 
 public class MainActivity extends MvpActivity<MainView, MainPresenter> implements MainView, GestureDetector.OnGestureListener {
 

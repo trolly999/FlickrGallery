@@ -9,7 +9,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 
 import uk.co.morrisonspls.sysdevns.flickrgallery.model.FlickrPhotoLoader;
-import uk.co.morrisonspls.sysdevns.flickrgallery.model.JsonFlickrPhoto;
+import uk.co.morrisonspls.sysdevns.flickrgallery.pojo.JsonFlickrPhoto;
 
 
 public class MainPresenter extends MvpBasePresenter<MainView> {

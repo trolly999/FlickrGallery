@@ -1,13 +1,14 @@
 package uk.co.morrisonspls.sysdevns.flickrgallery.model;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import uk.co.morrisonspls.sysdevns.flickrgallery.pojo.JsonFlickrFeed;
+import uk.co.morrisonspls.sysdevns.flickrgallery.pojo.JsonFlickrPhoto;
 
 /**
  * Created by sysdevns on 20/10/2016.

@@ -3,18 +3,12 @@ package uk.co.morrisonspls.sysdevns.flickrgallery.modules.main;
 import org.greenrobot.eventbus.EventBus;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import uk.co.morrisonspls.sysdevns.flickrgallery.model.FlickrPhotoLoader;
-import uk.co.morrisonspls.sysdevns.flickrgallery.model.JsonFlickrPhoto;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;

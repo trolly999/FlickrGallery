@@ -1,7 +1,6 @@
-package uk.co.morrisonspls.sysdevns.flickrgallery.model;
+package uk.co.morrisonspls.sysdevns.flickrgallery.pojo;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by sysdevns on 12/10/2016.

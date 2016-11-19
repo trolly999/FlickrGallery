@@ -1,14 +1,10 @@
 package uk.co.morrisonspls.sysdevns.flickrgallery.modules.main;
 
-import android.content.Context;
-
 import com.hannesdorfmann.mosby.mvp.MvpView;
-import com.hannesdorfmann.mosby.mvp.lce.MvpLceView;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import uk.co.morrisonspls.sysdevns.flickrgallery.model.JsonFlickrPhoto;
+import uk.co.morrisonspls.sysdevns.flickrgallery.pojo.JsonFlickrPhoto;
 
 public interface MainView extends MvpView {
 

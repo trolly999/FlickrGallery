@@ -6,15 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
-import uk.co.morrisonspls.sysdevns.flickrgallery.model.JsonFlickrPhoto;
-
-import static java.security.AccessController.getContext;
+import uk.co.morrisonspls.sysdevns.flickrgallery.pojo.JsonFlickrPhoto;
 
 
 public class FlickrPhotosAdapter extends ArrayAdapter<JsonFlickrPhoto> {
