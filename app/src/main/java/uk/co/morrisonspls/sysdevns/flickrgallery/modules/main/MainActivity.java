@@ -8,6 +8,7 @@ package uk.co.morrisonspls.sysdevns.flickrgallery.modules.main;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -29,6 +30,8 @@ import uk.co.morrisonspls.sysdevns.flickrgallery.modules.detail.DetailActivity;
 
 public class MainActivity extends MvpActivity<MainView, MainPresenter> implements MainView, GestureDetector.OnGestureListener {
 
+    private static final String TAG = "MainActivity";
+
     private final int SWIPE_DISTANCE = 200;
     private GestureDetector gestureDetector;
 
@@ -45,6 +48,8 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
         ButterKnife.bind(this);
 
         setRetainInstance(true);
+
+        Log.d(TAG,"Creating activity");
 
         presenter.loadPhotos();
 

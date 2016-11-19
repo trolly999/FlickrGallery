@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.widget.ImageView;
@@ -19,6 +20,8 @@ import uk.co.morrisonspls.sysdevns.flickrgallery.R;
 import uk.co.morrisonspls.sysdevns.flickrgallery.model.JsonFlickrPhoto;
 
 public class DetailActivity extends MvpActivity<DetailView, DetailPresenter> implements DetailView, GestureDetector.OnGestureListener {
+
+    private static final String TAG = "DetailActivity";
 
     private final int SWIPE_DISTANCE = 200;
     private GestureDetector gestureDetector;
@@ -84,6 +87,7 @@ public class DetailActivity extends MvpActivity<DetailView, DetailPresenter> imp
     @NonNull
     @Override
     public DetailPresenter createPresenter() {
+        Log.d(TAG, "Creating a new presenter");
         return new DetailPresenter();
     }
 
