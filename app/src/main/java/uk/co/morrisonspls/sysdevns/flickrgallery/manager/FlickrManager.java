@@ -15,6 +15,8 @@ import rx.schedulers.Schedulers;
 import uk.co.morrisonspls.sysdevns.flickrgallery.model.FlickrApi;
 import uk.co.morrisonspls.sysdevns.flickrgallery.pojo.JsonFlickrFeed;
 import uk.co.morrisonspls.sysdevns.flickrgallery.pojo.JsonFlickrPhoto;
+import uk.co.morrisonspls.sysdevns.flickrgallery.retrofit.RetrofitException;
+import uk.co.morrisonspls.sysdevns.flickrgallery.retrofit.RxErrorHandlingCallAdapterFactory;
 
 public class FlickrManager {
 
@@ -29,6 +31,7 @@ public class FlickrManager {
         this.retrofit = new Retrofit.Builder()
                 .baseUrl(URL)
                 .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxErrorHandlingCallAdapterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
         this.callback = callback;
@@ -62,6 +65,8 @@ public class FlickrManager {
                     @Override
                     public void onError(Throwable e) {
                         Log.d(TAG, "onError: " + e.getMessage());
+                        RetrofitException error = (RetrofitException) e;
+
                         callback.onError(e.getMessage());
                     }
 

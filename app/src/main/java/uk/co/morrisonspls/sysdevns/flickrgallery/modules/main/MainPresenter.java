@@ -68,6 +68,9 @@ public class MainPresenter extends MvpBasePresenter<MainView> {
                 @Override
                 public void onError(String errorMsg) {
                     Log.d(TAG, "FlickrManager - onError " + errorMsg);
+                    if (isViewAttached()) {
+                        getView().showError(errorMsg);
+                    }
                 }
             });
             flickrManager.doCall();
