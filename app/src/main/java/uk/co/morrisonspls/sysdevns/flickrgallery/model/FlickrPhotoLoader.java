@@ -1,6 +1,6 @@
 package uk.co.morrisonspls.sysdevns.flickrgallery.model;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -19,14 +19,14 @@ public class FlickrPhotoLoader {
     private final String url = "https://api.flickr.com/services/feeds/";
 
     public interface FlickrPhotoListener {
-        void onSuccess(ArrayList<JsonFlickrPhoto> jsonFlickrPhotos);
+        void onSuccess(List<JsonFlickrPhoto> jsonFlickrPhotos);
         void onError(String errorMsg);
     }
 
     private FlickrPhotoListener listener;
     private FlickrApi service;
     private Retrofit retrofit;
-    private ArrayList<JsonFlickrPhoto> jsonFlickrPhotos;
+    private List<JsonFlickrPhoto> jsonFlickrPhotos;
 
     public FlickrPhotoLoader(FlickrPhotoListener listener) {
         this.listener = listener;

@@ -9,14 +9,14 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import uk.co.morrisonspls.sysdevns.flickrgallery.pojo.JsonFlickrPhoto;
 
 
 public class FlickrPhotosAdapter extends ArrayAdapter<JsonFlickrPhoto> {
 
-    public FlickrPhotosAdapter(Context context, ArrayList<JsonFlickrPhoto> jsonFlickrPhotos) {
+    public FlickrPhotosAdapter(Context context, List<JsonFlickrPhoto> jsonFlickrPhotos) {
         super(context, 0, jsonFlickrPhotos);
     }
 

@@ -18,7 +18,7 @@ import android.widget.TextView;
 
 import com.hannesdorfmann.mosby.mvp.MvpActivity;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -78,7 +78,7 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
     }
 
     @Override
-    public void setData(ArrayList<JsonFlickrPhoto> jsonFlickrPhotos) {
+    public void setData(List<JsonFlickrPhoto> jsonFlickrPhotos) {
         gridView.setAdapter(new FlickrPhotosAdapter(this, jsonFlickrPhotos));
     }
 

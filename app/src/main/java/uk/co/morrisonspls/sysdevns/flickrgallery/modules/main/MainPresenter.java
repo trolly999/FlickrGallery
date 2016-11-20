@@ -7,8 +7,9 @@ import com.hannesdorfmann.mosby.mvp.MvpBasePresenter;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import uk.co.morrisonspls.sysdevns.flickrgallery.model.FlickrPhotoLoader;
+import uk.co.morrisonspls.sysdevns.flickrgallery.manager.FlickrManager;
 import uk.co.morrisonspls.sysdevns.flickrgallery.pojo.JsonFlickrPhoto;
 
 
@@ -33,7 +34,7 @@ public class MainPresenter extends MvpBasePresenter<MainView> {
     public void loadPhotos() {
         if (jsonFlickrPhotos == null) {
             Log.d(TAG,"Calling API to get photos");
-            FlickrPhotoLoader flickrPhotoLoader = new FlickrPhotoLoader(new FlickrPhotoLoader.FlickrPhotoListener() {
+     /*       FlickrPhotoLoader flickrPhotoLoader = new FlickrPhotoLoader(new FlickrPhotoLoader.FlickrPhotoListener() {
                 @Override
                 public void onSuccess(ArrayList<JsonFlickrPhoto> jsonFlickrPhotos) {
                     MainPresenter.this.jsonFlickrPhotos = jsonFlickrPhotos;
@@ -56,7 +57,20 @@ public class MainPresenter extends MvpBasePresenter<MainView> {
             if (isViewAttached()) {
                 Log.d(TAG,"view is attached");
                 getView().setData(jsonFlickrPhotos);
-            }
+            }*/
+            FlickrManager flickrManager = new FlickrManager(new FlickrManager.FlickrManagerCallback() {
+                @Override
+                public void onSuccess(List<JsonFlickrPhoto> jsonFlickrPhotos) {
+                    Log.d(TAG, "FlickrManager - onSuccess " + jsonFlickrPhotos.size());
+                    getView().setData(jsonFlickrPhotos);
+                }
+
+                @Override
+                public void onError(String errorMsg) {
+                    Log.d(TAG, "FlickrManager - onError " + errorMsg);
+                }
+            });
+            flickrManager.doCall();
         }
     }
 }
